@@ -15,10 +15,8 @@ const registrationSchema = new mongoose.Schema({
         max: 255
     },
     unix_timestamp: {
-        type: String,
-        required: true,
-        max: 255,
-        min: 3
+        type: Date,
+        default: Date.now
     }
 });
 

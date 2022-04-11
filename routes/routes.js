@@ -7,19 +7,67 @@ const Course = require("../model/Course");
 
 async function setID(){
     return Math.floor(Math.random() * 100);
-} 
+};
 
 router.post("/student", async (req, res) => {
+    console.log(req.body.full_name);
     try{
     const student = new Student({
-        unit_id: await setID(),
-        full_name: req.body.name,
+        unit_id: await setID(), 
+        full_name: req.body.full_name,
         email: req.body.email
     }); 
     await student.save();
     res.send(student);
-}catch{
-    res.status(404);
-    res.send({error: "Could not create student"})
-}
+    }catch(error){
+        res.status(404);
+        console.log(error);
+        res.send({error: "couldnt create"});
+    };
 });
+
+router.post("/course", async (req, res) => {
+    try{
+    const course = new Course({
+        course_code: req.body.course_code, 
+        course_name: req.body.course_name,
+        course_description: req.body.course_description
+    }); 
+    await course.save();
+    res.send(course);
+    }catch(error){
+        res.status(404);
+        console.log(error);
+        res.send({error: error});
+    };
+});
+
+router.post("/registration", async (req, res) => {
+    try{
+    const registration = new Registration({
+        student_id: req.body.student_id, 
+        course_code: req.body.course_code
+        
+    }); 
+    await registration.save();
+    res.send(registration);
+    }catch(error){
+        res.status(404);
+        console.log(error);
+        res.send({error: error});
+    };
+});
+
+router.get("/students", async (req, res) => {
+    console.log("hello world");
+    const student = await Student.find();
+    res.send(student);
+
+});
+
+router.patch("/student", async (req, res) => {
+   
+
+    console.log(req.body.name);
+});
+module.exports = router;
