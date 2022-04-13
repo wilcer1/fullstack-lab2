@@ -100,7 +100,7 @@ router.get("/studentinfo", async (req, res) => {
 
 
     const studentinfo = [];
-    for(let i = 0; i < student.length; i++){
+    for(let i = student.length - 1; i > (student.length - 6); i--){
         studentinfo.push
        ({
         student_id: student[i].unit_id,
